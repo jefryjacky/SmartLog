@@ -3,16 +3,14 @@ package p.com.smartlog.printers
 import p.com.smartlog.LogLevel
 import p.com.smartlog.Printer
 import java.io.File
-import java.io.OutputStream
 import java.lang.StringBuilder
 import java.text.DateFormat
-import java.text.SimpleDateFormat
 import java.util.*
 
 class FileLogPrinter(private var directory: File): Printer {
 
-    private var file: File = getLastFile()
     private var maxLength = 1024000
+    private var file: File = getUnfullFile(maxLength)
     private var maxAge: Long = 20 * 24 * 3600 * 1000 // 20 days
     private var maxFiles = 15
 
@@ -39,7 +37,10 @@ class FileLogPrinter(private var directory: File): Printer {
         }
     }
 
-    private fun getLastFile():File{
+    /**
+     * last file is ussualy unfull
+     */
+    private fun getUnfullFile(maxLength: Int):File{
         if(directory.listFiles().isNotEmpty()) {
             directory.listFiles().forEach {
                 if(it.length() <= maxLength){

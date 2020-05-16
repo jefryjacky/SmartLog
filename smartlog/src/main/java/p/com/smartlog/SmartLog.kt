@@ -1,6 +1,7 @@
 package p.com.smartlog
 
 import android.content.Context
+import p.com.smartlog.printers.AndroidLogCatPrinter
 import p.com.smartlog.printers.FileLogPrinter
 import java.io.File
 
@@ -16,15 +17,19 @@ class SmartLog private constructor() {
     }
 
     class Builder{
-        private var printers = ArrayList<Printer>()
-        fun addPrinter(printer: Printer):Builder{
-            printers.add(printer)
-            return this
-        }
+        private var printers = arrayListOf<Printer>(AndroidLogCatPrinter())
 
         fun enableFileLogging(context: Context):Builder{
             val folder = "SmartLog"
             val dir = context.getExternalFilesDir(folder)?:File("${context.filesDir}/$folder/")
+            if(!dir.exists()){
+                dir.mkdir()
+            }
+            printers.add(FileLogPrinter(dir))
+            return this
+        }
+
+        fun enableFileLogging(dir:File):Builder{
             if(!dir.exists()){
                 dir.mkdir()
             }

@@ -7,9 +7,10 @@ class DefaultMessageFormater:MessageFormater {
     private val messageBuilder = StringBuilder()
 
     override fun format(message: String?, throwable: Throwable?): String {
-        messageBuilder.append("thread: ")
+        messageBuilder.clear()
+        messageBuilder.append("[thread: ")
         messageBuilder.append(Thread.currentThread().name)
-        messageBuilder.append(", ")
+        messageBuilder.append("] - ")
         if(message!=null) {
             messageBuilder.append(message)
         }

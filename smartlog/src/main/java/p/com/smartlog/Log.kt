@@ -1,15 +1,10 @@
 package p.com.smartlog
 
+import p.com.smartlog.LogLevel.*
+
 object Log {
 
     var smartLog:SmartLog = SmartLog.Builder().build()
-
-    val VERBOSE = 2
-    val DEBUG = 3
-    val INFO = 4
-    val WARN = 5
-    val ERROR = 6
-    val ASSERT = 7
 
     fun v(tag:String, message:String){
         log(VERBOSE, tag, message)
@@ -67,7 +62,7 @@ object Log {
         log(ASSERT, tag, message, throwable)
     }
 
-    private fun log(priority:Int, tag:String, message: String?, throwable: Throwable? = null){
+    private fun log(priority:LogLevel, tag:String, message: String?, throwable: Throwable? = null){
         smartLog.log(priority, tag, message, throwable)
     }
 }

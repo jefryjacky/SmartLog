@@ -5,7 +5,7 @@ class SmartLog private constructor() {
     internal var messageFormater = DefaultMessageFormater()
     private var printers = ArrayList<Printer>()
 
-    internal fun log(priority: Int, tag: String, message: String?, throwable: Throwable? = null) {
+    internal fun log(priority: LogLevel, tag: String, message: String?, throwable: Throwable? = null) {
         printers.forEach {
             it.log(priority, tag, messageFormater.format(message, throwable))
         }

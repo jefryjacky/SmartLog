@@ -1,6 +1,8 @@
 package p.com.smartlog
 
 import java.lang.StringBuilder
+import java.text.DateFormat
+import java.util.*
 
 class DefaultMessageFormater:MessageFormater {
 
@@ -8,9 +10,16 @@ class DefaultMessageFormater:MessageFormater {
 
     override fun format(message: String?, throwable: Throwable?): String {
         messageBuilder.clear()
+
+        val dateFormat = DateFormat.getDateTimeInstance()
+        messageBuilder.append("[")
+        messageBuilder.append(dateFormat.format(Date()))
+        messageBuilder.append("], ")
+
         messageBuilder.append("[thread: ")
         messageBuilder.append(Thread.currentThread().name)
         messageBuilder.append("] - ")
+
         if(message!=null) {
             messageBuilder.append(message)
         }

@@ -1,12 +1,15 @@
 package p.com.smartlog
 
+import com.nhaarman.mockitokotlin2.any
 import org.junit.Before
 import org.junit.Test
+import org.mockito.ArgumentMatchers
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.verify
+import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
+import p.com.smartlog.LogLevel.DEBUG
 import java.lang.RuntimeException
+import java.util.*
 
 class SmartLogTest {
 
@@ -27,12 +30,12 @@ class SmartLogTest {
 
     @Test
     fun logTest(){
-        val priority = SmartLog.DEBUG
+        val priority = DEBUG
         val tag = "TAG"
         val message = "message"
         val throwable = RuntimeException()
         val messageFormated = "message and throwable"
-        `when`(mockMessageFormater.format(message, throwable)).thenReturn(messageFormated)
+        `when`(mockMessageFormater.format(eq(message), eq(throwable), any())).thenReturn(messageFormated)
         smartLogConfig.log(priority, tag, message, throwable)
         verify(printer).log(priority, tag, messageFormated)
     }

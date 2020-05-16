@@ -8,12 +8,12 @@ class DefaultMessageFormater:MessageFormater {
 
     private val messageBuilder = StringBuilder()
 
-    override fun format(message: String?, throwable: Throwable?): String {
+    override fun format(message: String?, throwable: Throwable?, date: Date): String {
         messageBuilder.clear()
 
         val dateFormat = DateFormat.getDateTimeInstance()
         messageBuilder.append("[")
-        messageBuilder.append(dateFormat.format(Date()))
+        messageBuilder.append(dateFormat.format(date))
         messageBuilder.append("], ")
 
         messageBuilder.append("[thread: ")

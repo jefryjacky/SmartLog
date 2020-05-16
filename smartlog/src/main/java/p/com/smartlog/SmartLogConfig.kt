@@ -4,36 +4,25 @@ import android.content.Context
 import p.com.smartlog.printers.AndroidLogCatPrinter
 import p.com.smartlog.printers.FileLogPrinter
 import java.io.File
+import java.util.*
+import kotlin.collections.ArrayList
 
 class SmartLogConfig private constructor() {
 
     internal var messageFormater = DefaultMessageFormater()
-    private var printers = ArrayList<Printer>()
+    private var printers: List<Printer>? = null
 
     internal fun log(priority: LogLevel, tag: String, message: String?, throwable: Throwable? = null) {
-        printers.forEach {
-            it.log(priority, tag, messageFormater.format(message, throwable))
+        printers?.forEach {
+            it.log(priority, tag, messageFormater.format(message, throwable, Date()))
         }
     }
 
     class Builder{
-        private var printers = arrayListOf<Printer>(AndroidLogCatPrinter())
+        private var printers = ArrayList<Printer>()
 
-        fun enableFileLogging(context: Context):Builder{
-            val folder = "SmartLog"
-            val dir = context.getExternalFilesDir(folder)?:File("${context.filesDir}/$folder/")
-            if(!dir.exists()){
-                dir.mkdir()
-            }
-            printers.add(FileLogPrinter(dir))
-            return this
-        }
-
-        fun enableFileLogging(dir:File):Builder{
-            if(!dir.exists()){
-                dir.mkdir()
-            }
-            printers.add(FileLogPrinter(dir))
+        fun addPrinter(printer: Printer): Builder{
+            printers.add(printer)
             return this
         }
 

@@ -35,6 +35,7 @@ dependencies {
     implementation "androidx.core:core-ktx:1.1.0-rc02"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     testImplementation 'org.mockito:mockito-inline:2.21.0'
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
 }
 repositories {
     mavenCentral()

@@ -2,19 +2,19 @@ package p.com.sample
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import p.com.smartlog.Log
 import p.com.smartlog.SmartLog
+import p.com.smartlog.SmartLogConfig
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Log.smartLog = SmartLog.Builder()
+        SmartLog.config = SmartLogConfig.Builder()
             .enableFileLogging(this)
             .build()
 
-        Log.d("jj","test write log to file")
-        Log.d("jj","test write log to file2")
+        SmartLog.d("jj","test write log to file")
+        SmartLog.d("jj","test write log to file2")
     }
 }

@@ -10,7 +10,7 @@ import java.lang.RuntimeException
 class LogTest{
 
     @Mock
-    lateinit var smartLog:SmartLog
+    lateinit var smartLogConfig:SmartLogConfig
     private val tag = "TAG"
     private val message = "Log's MESSAGE"
     private val throwable = RuntimeException()
@@ -18,90 +18,90 @@ class LogTest{
     @Before
     fun setup(){
         MockitoAnnotations.initMocks(this)
-        Log.smartLog = smartLog
+        SmartLog.config = smartLogConfig
     }
 
     @Test
     fun verboseTagMessageTest(){
-        Log.v(tag, message)
-        verify(smartLog).log(Log.VERBOSE, tag, message, null)
+        SmartLog.v(tag, message)
+        verify(smartLogConfig).log(SmartLog.VERBOSE, tag, message, null)
     }
 
     @Test
     fun verboseTagMessageThrowableTest(){
-        Log.v(tag, message, throwable)
-        verify(smartLog).log(Log.VERBOSE, tag, message, throwable)
+        SmartLog.v(tag, message, throwable)
+        verify(smartLogConfig).log(SmartLog.VERBOSE, tag, message, throwable)
     }
 
     @Test
     fun debugTagMessageTest(){
-        Log.d(tag, message)
-        verify(smartLog).log(Log.DEBUG, tag, message, null)
+        SmartLog.d(tag, message)
+        verify(smartLogConfig).log(SmartLog.DEBUG, tag, message, null)
     }
 
     @Test
     fun debugTagMessageThrowableTest(){
-        Log.d(tag, message, throwable)
-        verify(smartLog).log(Log.DEBUG, tag, message, throwable)
+        SmartLog.d(tag, message, throwable)
+        verify(smartLogConfig).log(SmartLog.DEBUG, tag, message, throwable)
     }
 
     @Test
     fun infoTagMessageTest(){
-        Log.i(tag, message)
-        verify(smartLog).log(Log.INFO, tag, message, null)
+        SmartLog.i(tag, message)
+        verify(smartLogConfig).log(SmartLog.INFO, tag, message, null)
     }
 
     @Test
     fun infoTagMessageThrowableTest(){
-        Log.i(tag, message, throwable)
-        verify(smartLog).log(Log.INFO, tag, message, throwable)
+        SmartLog.i(tag, message, throwable)
+        verify(smartLogConfig).log(SmartLog.INFO, tag, message, throwable)
     }
 
     @Test
     fun warnTagMessageTest(){
-        Log.w(tag, message)
-        verify(smartLog).log(Log.WARN, tag, message, null)
+        SmartLog.w(tag, message)
+        verify(smartLogConfig).log(SmartLog.WARN, tag, message, null)
     }
 
     @Test
     fun warnTagThrowableTest(){
-        Log.w(tag, throwable)
-        verify(smartLog).log(Log.WARN, tag, null, throwable)
+        SmartLog.w(tag, throwable)
+        verify(smartLogConfig).log(SmartLog.WARN, tag, null, throwable)
     }
 
     @Test
     fun warnTagMessageThrowableTest(){
-        Log.w(tag, message)
-        verify(smartLog).log(Log.WARN, tag, message, null)
+        SmartLog.w(tag, message)
+        verify(smartLogConfig).log(SmartLog.WARN, tag, message, null)
     }
 
     @Test
     fun errorTagMessageTest(){
-        Log.e(tag, message)
-        verify(smartLog).log(Log.ERROR, tag, message, null)
+        SmartLog.e(tag, message)
+        verify(smartLogConfig).log(SmartLog.ERROR, tag, message, null)
     }
 
     @Test
     fun errorTagMessageThrowable(){
-        Log.e(tag, message, throwable)
-        verify(smartLog).log(Log.ERROR, tag, message, throwable)
+        SmartLog.e(tag, message, throwable)
+        verify(smartLogConfig).log(SmartLog.ERROR, tag, message, throwable)
     }
 
     @Test
     fun wtfTagMessage(){
-        Log.wtf(tag, message)
-        verify(smartLog).log(Log.ASSERT, tag, message, null)
+        SmartLog.wtf(tag, message)
+        verify(smartLogConfig).log(SmartLog.ASSERT, tag, message, null)
     }
 
     @Test
     fun wtfTagThrowable(){
-        Log.wtf(tag, throwable)
-        verify(smartLog).log(Log.ASSERT, tag, null, throwable)
+        SmartLog.wtf(tag, throwable)
+        verify(smartLogConfig).log(SmartLog.ASSERT, tag, null, throwable)
     }
 
     @Test
     fun wtfTagMessageThrowable(){
-        Log.wtf(tag, message, throwable)
-        verify(smartLog).log(Log.ASSERT, tag, message, throwable)
+        SmartLog.wtf(tag, message, throwable)
+        verify(smartLogConfig).log(SmartLog.ASSERT, tag, message, throwable)
     }
 }

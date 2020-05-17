@@ -25,8 +25,8 @@
 
 3. How to log
 ```kotlin
-   SmartLog.d("hello world") // then it will print class name, date time, current thread and message
-   SmartLog.tag("custom tag").d("hello world") // then it will print custom, date time, current thread and message
+   SmartLog.d("hello world") // then it will print class name, current thread and message
+   SmartLog.tag("custom tag").d("hello world") // then it will print custom, current thread and message
 ``` 
 
 

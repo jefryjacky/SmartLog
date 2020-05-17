@@ -21,9 +21,9 @@ ext {
     developerName = 'Jefry Jacky'
     developerEmail = 'jefryjacky@gmail.com'
 
-    licenseName = 'Apache License, Version 2.0'
+    licenseName = 'Apache-2.0'
     licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0'
-    allLicenses = ["Apache License, Version 2.0"]
+    allLicenses = ["Apache-2.0"]
 }
 
 android {

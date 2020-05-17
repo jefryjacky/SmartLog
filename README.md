@@ -9,7 +9,7 @@
             .build()
 ``` 
 
-2. Setup with file logging, onCreate of your application class
+2. Setup with file logging, put code below in onCreate of your application class
 ```kotlin
   val folder = "SmartLog"
         val dir = getExternalFilesDir(folder)?: File("${filesDir}/$folder/")

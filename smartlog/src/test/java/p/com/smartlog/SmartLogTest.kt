@@ -35,7 +35,7 @@ class SmartLogTest {
         val message = "message"
         val throwable = RuntimeException()
         val messageFormated = "message and throwable"
-        `when`(mockMessageFormater.format(eq(message), eq(throwable), any())).thenReturn(messageFormated)
+        `when`(mockMessageFormater.format(message, throwable)).thenReturn(messageFormated)
         smartLogConfig.log(priority, tag, message, throwable)
         verify(printer).log(priority, tag, messageFormated)
     }

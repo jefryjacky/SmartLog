@@ -5,8 +5,6 @@ import org.junit.Test
 import java.lang.RuntimeException
 import java.lang.StringBuilder
 import org.junit.Assert.*
-import java.text.DateFormat
-import java.util.*
 
 class DefaultMessageFormaterTest {
 
@@ -16,12 +14,6 @@ class DefaultMessageFormaterTest {
         val message = "message"
         val throwable = RuntimeException()
         val messageBuilder = StringBuilder()
-        val date = Date()
-
-        val dateFormat = DateFormat.getDateTimeInstance()
-        messageBuilder.append("[")
-        messageBuilder.append(dateFormat.format(Date()))
-        messageBuilder.append("], ")
 
         messageBuilder.append("[thread: ")
         messageBuilder.append(Thread.currentThread().name)
@@ -31,7 +23,7 @@ class DefaultMessageFormaterTest {
         messageBuilder.append("\n")
         messageBuilder.append(throwable.toString())
         val expectedOutputMessage = messageBuilder.toString()
-        val outputMessage = formater.format(message, throwable, date)
+        val outputMessage = formater.format(message, throwable)
         assertThat(outputMessage, `is`(expectedOutputMessage))
     }
 
@@ -40,12 +32,6 @@ class DefaultMessageFormaterTest {
         val formater = DefaultMessageFormater()
         val throwable = RuntimeException()
         val messageBuilder = StringBuilder()
-        val date = Date()
-
-        val dateFormat = DateFormat.getDateTimeInstance()
-        messageBuilder.append("[")
-        messageBuilder.append(dateFormat.format(Date()))
-        messageBuilder.append("], ")
 
         messageBuilder.append("[thread: ")
         messageBuilder.append(Thread.currentThread().name)
@@ -54,7 +40,7 @@ class DefaultMessageFormaterTest {
         messageBuilder.append("\n")
         messageBuilder.append(throwable.toString())
         val expectedOutputMessage = messageBuilder.toString()
-        val outputMessage = formater.format(null, throwable = throwable, date = date)
+        val outputMessage = formater.format(null, throwable = throwable)
         assertThat(outputMessage, `is`(expectedOutputMessage))
     }
 
@@ -63,12 +49,6 @@ class DefaultMessageFormaterTest {
         val formater = DefaultMessageFormater()
         val message = "message"
         val messageBuilder = StringBuilder()
-        val date = Date()
-
-        val dateFormat = DateFormat.getDateTimeInstance()
-        messageBuilder.append("[")
-        messageBuilder.append(dateFormat.format(Date()))
-        messageBuilder.append("], ")
 
         messageBuilder.append("[thread: ")
         messageBuilder.append(Thread.currentThread().name)
@@ -76,7 +56,7 @@ class DefaultMessageFormaterTest {
 
         messageBuilder.append(message)
         val expectedOutputMessage = messageBuilder.toString()
-        val outputMessage = formater.format(message, date = date)
+        val outputMessage = formater.format(message)
         assertThat(outputMessage, `is`(expectedOutputMessage))
     }
 }

@@ -14,7 +14,7 @@ class SmartLogConfig private constructor() {
 
     internal fun log(priority: LogLevel, tag: String, message: String?, throwable: Throwable? = null) {
         printers?.forEach {
-            it.log(priority, tag, messageFormater.format(message, throwable, Date()))
+            it.log(priority, tag, messageFormater.format(message, throwable))
         }
     }
 

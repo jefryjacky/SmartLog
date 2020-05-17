@@ -28,6 +28,12 @@ class FileLogPrinter(private var directory: File, internal val maxFiles: Int = 1
             builder.append("\n[")
             builder.append(logLevel.name)
             builder.append("] :  ")
+
+            val dateFormat = DateFormat.getDateTimeInstance()
+            builder.append("[")
+            builder.append(dateFormat.format(Date()))
+            builder.append("], ")
+
             builder.append(message)
             file!!.appendText(builder.toString())
         }

@@ -2,6 +2,14 @@
 
 # SmartLog
 
+# Gradle  
+```  
+dependencies {  
+    ...  
+    implementation 'smart.android:smartlog:1.0.0'
+}  
+```  
+
 # Usage 
 1. Simple setup, put code below in onCreate of your application class
 ```kotlin

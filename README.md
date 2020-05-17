@@ -2,14 +2,14 @@
 
 # Usage 
 
-1. Simple setup
+1. Simple setup, put code below in onCreate of your application class
 ```kotlin
   SmartLog.config = SmartLogConfig.Builder()
             .addPrinter(AndroidLogCatPrinter())
             .build()
 ``` 
 
-2. Setup with file logging
+2. Setup with file logging, onCreate of your application class
 ```kotlin
   val folder = "SmartLog"
         val dir = getExternalFilesDir(folder)?: File("${filesDir}/$folder/")

@@ -6,7 +6,7 @@ ext {
     bintrayRepo = 'AndroidLibrary'
     bintrayName = 'SmartLog'
 
-    publishedGroupId = 'smart.androidlibrary'
+    publishedGroupId = 'smart.android'
     libraryName = 'smartlog'
     artifact = 'smartlog'
 

@@ -1,7 +1,7 @@
 # SmartLog
 
 # Usage 
-
+----
 1. Simple setup, put code below in onCreate of your application class
 ```kotlin
   SmartLog.config = SmartLogConfig.Builder()
@@ -29,6 +29,13 @@
    SmartLog.tag("custom tag").d("hello world") // then it will print custom, current thread and message
 ``` 
 
+Auto clean old files
+----
+default maximum number of file is 15, if exceed that number then it will delete the oldest file.
+you can custom the maximum number of files
+```kotlin
+ FileLogPrinter(dir, 15)
+``` 
 
 ### License
 <pre>

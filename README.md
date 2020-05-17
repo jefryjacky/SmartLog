@@ -1,5 +1,35 @@
 # SmartLog
 
+# Usage 
+
+1. Simple setup
+```kotlin
+  SmartLog.config = SmartLogConfig.Builder()
+            .addPrinter(AndroidLogCatPrinter())
+            .build()
+``` 
+
+2. Setup with file logging
+```kotlin
+  val folder = "SmartLog"
+        val dir = getExternalFilesDir(folder)?: File("${filesDir}/$folder/")
+        if(!dir.exists()){
+            dir.mkdir()
+        }
+
+   SmartLog.config = SmartLogConfig.Builder()
+            .addPrinter(AndroidLogCatPrinter())
+            .addPrinter(FileLogPrinter(dir))
+            .build()
+``` 
+
+3. How to log
+```kotlin
+   SmartLog.d("hello world") // then it will print class name, date time, current thread and message
+   SmartLog.tag("custom tag").d("hello world") // then it will print custom, date time, current thread and message
+``` 
+
+
 ### License
 <pre>
 Copyright 2020 Jefry Jacky

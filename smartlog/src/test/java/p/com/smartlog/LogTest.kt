@@ -12,7 +12,7 @@ class LogTest{
 
     @Mock
     lateinit var smartLogConfig:SmartLogConfig
-    private val tag = "TAG"
+    private val tag = SmartLog.defaultTag
     private val message = "Log's MESSAGE"
     private val throwable = RuntimeException()
 
@@ -24,85 +24,101 @@ class LogTest{
 
     @Test
     fun verboseTagMessageTest(){
-        SmartLog.v(tag, message)
+        SmartLog.v(message)
         verify(smartLogConfig).log(VERBOSE, tag, message, null)
     }
 
     @Test
     fun verboseTagMessageThrowableTest(){
-        SmartLog.v(tag, message, throwable)
+        SmartLog.v(message, throwable)
         verify(smartLogConfig).log(VERBOSE, tag, message, throwable)
     }
 
     @Test
     fun debugTagMessageTest(){
-        SmartLog.d(tag, message)
+        SmartLog.d(message)
         verify(smartLogConfig).log(DEBUG, tag, message, null)
     }
 
     @Test
     fun debugTagMessageThrowableTest(){
-        SmartLog.d(tag, message, throwable)
+        SmartLog.d(message, throwable)
         verify(smartLogConfig).log(DEBUG, tag, message, throwable)
     }
 
     @Test
     fun infoTagMessageTest(){
-        SmartLog.i(tag, message)
+        SmartLog.i(message)
         verify(smartLogConfig).log(INFO, tag, message, null)
     }
 
     @Test
     fun infoTagMessageThrowableTest(){
-        SmartLog.i(tag, message, throwable)
+        SmartLog.i(message, throwable)
         verify(smartLogConfig).log(INFO, tag, message, throwable)
     }
 
     @Test
     fun warnTagMessageTest(){
-        SmartLog.w(tag, message)
+        SmartLog.w(message)
         verify(smartLogConfig).log(WARN, tag, message, null)
     }
 
     @Test
     fun warnTagThrowableTest(){
-        SmartLog.w(tag, throwable)
+        SmartLog.w(throwable)
         verify(smartLogConfig).log(WARN, tag, null, throwable)
     }
 
     @Test
     fun warnTagMessageThrowableTest(){
-        SmartLog.w(tag, message)
+        SmartLog.w(message)
         verify(smartLogConfig).log(WARN, tag, message, null)
     }
 
     @Test
     fun errorTagMessageTest(){
-        SmartLog.e(tag, message)
+        SmartLog.e(message)
         verify(smartLogConfig).log(ERROR, tag, message, null)
     }
 
     @Test
     fun errorTagMessageThrowable(){
-        SmartLog.e(tag, message, throwable)
+        SmartLog.e(message, throwable)
         verify(smartLogConfig).log(ERROR, tag, message, throwable)
     }
 
     @Test
     fun wtfTagMessage(){
-        SmartLog.wtf(tag, message)
+        SmartLog.wtf(message)
         verify(smartLogConfig).log(ASSERT, tag, message, null)
     }
 
     @Test
     fun wtfTagThrowable(){
-        SmartLog.wtf(tag, throwable)
+        SmartLog.wtf(throwable)
         verify(smartLogConfig).log(ASSERT, tag, null, throwable)
     }
 
     @Test
     fun wtfTagMessageThrowable(){
-        SmartLog.wtf(tag, message, throwable)
+        SmartLog.wtf(message, throwable)
         verify(smartLogConfig).log(ASSERT, tag, message, throwable)
+    }
+
+    @Test
+    fun tag(){
+        Given("custom tag") {
+            val customTag = "custom"
+            
+            When("log"){
+                SmartLog.tag(customTag).d(message)
+
+                Then("check if logged with with custom tag"){
+                    verify(smartLogConfig).log(DEBUG, customTag, message)
+                }
+            }
+        }
+
     }
 }

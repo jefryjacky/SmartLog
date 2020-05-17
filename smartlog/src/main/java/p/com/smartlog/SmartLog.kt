@@ -1,68 +1,101 @@
 package p.com.smartlog
 
 import p.com.smartlog.LogLevel.*
+import java.util.regex.Pattern
 
-object SmartLog {
+object SmartLog:ISmartLog {
+
+    private val ANONYMOUS_CLASS = Pattern.compile("(\\$\\d+)+$")
+
+    private var tag:String? = null
+
+    internal val defaultTag: String
+        get() {
+            return Throwable().stackTrace
+                .first {
+                    it.className !in javaClass.name
+                }.let(::createStackElementTag)
+        }
+
+    /**
+     * Extract the tag which should be used for the message from the `element`. By default
+     * this will use the class name without any anonymous class suffixes (e.g., `Foo$1`
+     * becomes `Foo`).
+     */
+    private fun createStackElementTag(element: StackTraceElement):String{
+        var tag = element.className.substringAfterLast('.')
+        val anonymous = ANONYMOUS_CLASS.matcher(tag)
+        if(anonymous.find()){
+            tag = anonymous.replaceAll("")
+        }
+        return tag
+    }
 
     var config:SmartLogConfig = SmartLogConfig.Builder().build()
 
-    fun v(tag:String, message:String){
+    fun tag(tag: String):ISmartLog{
+        this.tag = tag
+        return this
+    }
+
+    override fun v(message:String){
         log(VERBOSE, tag, message)
     }
 
-    fun v(tag:String, message:String, throwable: Throwable){
+    override fun v(message:String, throwable: Throwable){
         log(VERBOSE, tag, message, throwable)
     }
 
-    fun d(tag:String, message:String){
+    override fun d(message:String){
         log(DEBUG, tag, message)
     }
 
-    fun d(tag:String, message:String, throwable: Throwable){
+    override fun d(message:String, throwable: Throwable){
         log(DEBUG, tag, message, throwable)
     }
 
-    fun i(tag:String, message: String){
+    override fun i(message: String){
         log(INFO, tag, message)
     }
 
-    fun i(tag: String, message: String, throwable: Throwable){
+    override fun i(message: String, throwable: Throwable){
         log(INFO, tag, message, throwable)
     }
 
-    fun w(tag:String, message:String){
+    override fun w(message:String){
         log(WARN, tag, message)
     }
 
-    fun w(tag:String, throwable: Throwable){
+    override fun w(throwable: Throwable){
         log(WARN, tag, null, throwable)
     }
 
-    fun w(tag:String, message:String, throwable: Throwable){
+    override fun w(message:String, throwable: Throwable){
         log(WARN, tag, message, throwable)
     }
 
-    fun e(tag:String, message:String){
+    override fun e(message:String){
         log(ERROR, tag, message)
     }
 
-    fun e(tag:String, message:String, throwable: Throwable){
+    override fun e(message:String, throwable: Throwable){
         log(ERROR, tag, message, throwable)
     }
 
-    fun wtf(tag:String, message: String){
+    override fun wtf(message: String){
         log(ASSERT, tag, message)
     }
 
-    fun wtf(tag:String, throwable: Throwable){
+    override fun wtf(throwable: Throwable){
         log(ASSERT, tag, null, throwable)
     }
 
-    fun wtf(tag:String, message: String, throwable: Throwable){
+    override fun wtf( message: String, throwable: Throwable){
         log(ASSERT, tag, message, throwable)
     }
 
-    private fun log(priority:LogLevel, tag:String, message: String?, throwable: Throwable? = null){
-        config.log(priority, tag, message, throwable)
+    private fun log(priority:LogLevel, tag:String?, message: String?, throwable: Throwable? = null){
+        config.log(priority, tag?:defaultTag, message, throwable)
+        this.tag = null
     }
 }

@@ -25,7 +25,8 @@ class MainActivity : AppCompatActivity() {
             .addPrinter(FileLogPrinter(dir))
             .build()
 
-        SmartLog.d("jj","test write log to file")
-        SmartLog.d("jj","test write log to file2")
+        SmartLog.tag("jefryjacky").d("hello world")
+        SmartLog.d("test write log to file")
+        SmartLog.d("test write log to file2")
     }
 }

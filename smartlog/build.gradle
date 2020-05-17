@@ -5,12 +5,15 @@ apply plugin: 'kotlin-android'
 android {
     compileSdkVersion 28
 
+    def majorVersion = 1
+    def minorVersion = 0
+    def releaseVersion = 0
 
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode ((majorVersion * 1000000) + (minorVersion * 1000) + releaseVersion)
+        versionName majorVersion.toString() +"."+ minorVersion.toString() +"."+ releaseVersion.toString()
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 

@@ -2,7 +2,7 @@
 
 # SmartLog
 
-# Gradle  
+**Gradle**
 ```  
 dependencies {  
     ...  

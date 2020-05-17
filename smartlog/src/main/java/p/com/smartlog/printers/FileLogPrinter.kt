@@ -11,15 +11,16 @@ import java.util.concurrent.Executors
 
 class FileLogPrinter(private var directory: File): Printer {
 
-    private var maxLength = 1024000
-    private var file: File = getUnfullFile(maxLength)
-    private var maxAge: Long = 20 * 24 * 3600 * 1000 // 20 days
-    private var maxFiles = 15
+    private var file: File? = null
     private val dispatcher = Executors.newFixedThreadPool(1).asCoroutineDispatcher()
 
     override fun log(logLevel: LogLevel, tag: String, message: String) {
         GlobalScope.launch(dispatcher) {
-            if(file.length() > maxLength){
+            if(file == null){
+                file = getUnfullFile()
+            }
+
+            if(file!!.length() >= MAX_LENGTH){
                 cleanOldfile()
                 file = createNewFile()
             }
@@ -28,27 +29,29 @@ class FileLogPrinter(private var directory: File): Printer {
             builder.append(logLevel.name)
             builder.append("] :  ")
             builder.append(message)
-            file.appendText(builder.toString())
+            file!!.appendText(builder.toString())
         }
     }
 
     private fun createNewFile():File {
-        cleanOldfile()
-        val dateFormat = DateFormat.getDateTimeInstance()
-        val filename = dateFormat.format(Date())
-        val newFile = File("${directory}/${filename}.txt")
-        return newFile.also {
+        return File(generateNewFilePath()).also {
             it.createNewFile()
         }
+    }
+
+    internal fun generateNewFilePath():String{
+        val dateFormat = DateFormat.getDateTimeInstance()
+        val filename = dateFormat.format(Date())
+        return "${directory}/${filename}.txt"
     }
 
     /**
      * last file is ussualy unfull
      */
-    private fun getUnfullFile(maxLength: Int):File{
+    internal fun getUnfullFile():File{
         if(directory.listFiles().isNotEmpty()) {
             directory.listFiles().forEach {
-                if(it.length() <= maxLength){
+                if(it.length() < MAX_LENGTH){
                     return it
                 }
             }
@@ -56,14 +59,19 @@ class FileLogPrinter(private var directory: File): Printer {
         return createNewFile()
     }
 
-    private fun cleanOldfile(){
-        if(directory.listFiles().size > maxFiles) {
-            directory.listFiles().forEach {
-                val age = System.currentTimeMillis() - it.lastModified()
-                if (age > maxAge) {
-                    it.delete()
-                }
+    internal fun cleanOldfile(){
+        directory.listFiles().forEach {
+            val currentTime = System.currentTimeMillis()
+            val lastModified = it.lastModified()
+            val age = currentTime - lastModified
+            if (age > MAX_AGE) {
+                it.delete()
             }
         }
+    }
+
+    companion object{
+        internal const val MAX_LENGTH = 1024000
+        internal const val MAX_AGE: Long = 1728000000 // 20 days
     }
 }

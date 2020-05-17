@@ -2,6 +2,29 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 
+ext {
+    bintrayRepo = 'AndroidLibrary'
+    bintrayName = 'SmartLog'
+
+    publishedGroupId = 'smartlab.androidlibrary'
+    libraryName = 'smartlog'
+    artifact = 'smartlog'
+
+    libraryDescription = 'Android logging library'
+
+    siteUrl = 'https://github.com/jefryjacky/SmartLog'
+    gitUrl = 'https://github.com/jefryjacky/SmartLog.git'
+
+    libraryVersion = '1.0.0'
+
+    developerId = 'jefryjacky'
+    developerName = 'Jefry Jacky'
+    developerEmail = 'jefryjacky@gmail.com'
+
+    licenseName = 'Apache License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0'
+    allLicenses = ["Apache License, Version 2.0"]
+}
 
 android {
     compileSdkVersion 28
@@ -45,3 +68,7 @@ dependencies {
 repositories {
     mavenCentral()
 }
+
+apply from: 'https://raw.githubusercontent.com/numetriclabz/jcenter/master/installv.gradle'
+apply from: 'https://raw.githubusercontent.com/numetriclabz/jcenter/master/bintrayv.gradle'
+

@@ -6,6 +6,7 @@ import org.junit.Test
 
 import org.junit.Assert.*
 import p.com.smartlog.Given
+import p.com.smartlog.Scenario
 import p.com.smartlog.Then
 import p.com.smartlog.When
 import java.io.File
@@ -61,28 +62,56 @@ class FileLogPrinterTest {
 
     @Test
     fun cleanOldFile(){
-        Given("list of file"){
-            val directory = mock<File>()
-            val printer = FileLogPrinter(directory)
+        Scenario("exceed max file") {
+            Given("4 list files and max file 2") {
+                val directory = mock<File>()
+                val printer = FileLogPrinter(directory, 2)
 
-            val file1 = createFileWithAge(-5)
-            val file2 = createFileWithAge(-21)
-            val file3 = createFileWithAge(-10)
-            val file4 = createFileWithAge(-30)
-            val listFile = arrayOf(file1, file2, file3, file4)
-            whenever(directory.listFiles()).thenReturn(listFile)
+                val file1 = createFileWithAge(-5)
+                val file2 = createFileWithAge(-21)
+                val file3 = createFileWithAge(-10)
+                val file4 = createFileWithAge(-30)
+                val listFile = arrayOf(file1, file2, file3, file4)
+                whenever(directory.listFiles()).thenReturn(listFile)
 
-            When("clean file older than 20 days"){
-               printer.cleanOldfile()
+                When("clean older files") {
+                    printer.cleanOldfile()
 
-                Then("file 1 and file 3 is not deleted"){
-                    verify(file1, never()).delete()
-                    verify(file3, never()).delete()
+                    Then("file 1 and file 3 is not deleted because younger") {
+                        verify(file1, never()).delete()
+                        verify(file3, never()).delete()
+                    }
+
+                    Then("file 2 and file 4 will be deleted because older") {
+                        verify(file2, times(1)).delete()
+                        verify(file4, times(1)).delete()
+                    }
                 }
+            }
+        }
 
-                Then("file 2 and file 4 will be deleted"){
-                    verify(file2, times(1)).delete()
-                    verify(file4, times(1)).delete()
+        Scenario("no exceed max file"){
+            Given("1 list files and max file default (15 files)"){
+                val directory = mock<File>()
+                val printer = FileLogPrinter(directory)
+
+                val file1 = createFileWithAge(-5)
+                val file2 = createFileWithAge(-21)
+                val file3 = createFileWithAge(-10)
+                val file4 = createFileWithAge(-30)
+                val listFile = arrayOf(file1, file2, file3, file4)
+                whenever(directory.listFiles()).thenReturn(listFile)
+
+                When("clean older files") {
+                    printer.cleanOldfile()
+
+
+                    Then("all file is not deleted") {
+                        verify(file1, never()).delete()
+                        verify(file2, never()).delete()
+                        verify(file3, never()).delete()
+                        verify(file4, never()).delete()
+                    }
                 }
             }
         }

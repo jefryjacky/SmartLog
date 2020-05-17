@@ -9,7 +9,7 @@ import java.text.DateFormat
 import java.util.*
 import java.util.concurrent.Executors
 
-class FileLogPrinter(private var directory: File): Printer {
+class FileLogPrinter(private var directory: File, internal val maxFiles: Int = 15): Printer {
 
     private var file: File? = null
     private val dispatcher = Executors.newFixedThreadPool(1).asCoroutineDispatcher()
@@ -60,11 +60,12 @@ class FileLogPrinter(private var directory: File): Printer {
     }
 
     internal fun cleanOldfile(){
-        directory.listFiles().forEach {
-            val currentTime = System.currentTimeMillis()
-            val lastModified = it.lastModified()
-            val age = currentTime - lastModified
-            if (age > MAX_AGE) {
+        if(directory.listFiles().size > maxFiles) {
+            val deletedFiles = directory.listFiles()
+                .sortedBy { it.lastModified() }
+                .subList(0, directory.listFiles().size - maxFiles)
+
+            deletedFiles.forEach {
                 it.delete()
             }
         }
@@ -72,6 +73,5 @@ class FileLogPrinter(private var directory: File): Printer {
 
     companion object{
         internal const val MAX_LENGTH = 1024000
-        internal const val MAX_AGE: Long = 1728000000 // 20 days
     }
 }

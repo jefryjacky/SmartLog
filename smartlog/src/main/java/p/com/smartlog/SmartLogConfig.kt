@@ -1,10 +1,5 @@
 package p.com.smartlog
 
-import android.content.Context
-import p.com.smartlog.printers.AndroidLogCatPrinter
-import p.com.smartlog.printers.FileLogPrinter
-import java.io.File
-import java.util.*
 import kotlin.collections.ArrayList
 
 class SmartLogConfig private constructor() {

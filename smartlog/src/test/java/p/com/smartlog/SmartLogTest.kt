@@ -1,15 +1,12 @@
 package p.com.smartlog
 
-import com.nhaarman.mockitokotlin2.any
 import org.junit.Before
 import org.junit.Test
-import org.mockito.ArgumentMatchers
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import p.com.smartlog.LogLevel.DEBUG
 import java.lang.RuntimeException
-import java.util.*
 
 class SmartLogTest {
 

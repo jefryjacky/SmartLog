@@ -110,7 +110,7 @@ class LogTest{
     fun tag(){
         Given("custom tag") {
             val customTag = "custom"
-            
+
             When("log"){
                 SmartLog.tag(customTag).d(message)
 

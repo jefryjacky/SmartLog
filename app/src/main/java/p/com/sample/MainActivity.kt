@@ -2,6 +2,7 @@ package p.com.sample
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import kotlinx.android.synthetic.main.activity_main.*
 import p.com.smartlog.SmartLog
 import p.com.smartlog.SmartLogConfig
 import p.com.smartlog.printers.AndroidLogCatPrinter
@@ -25,8 +26,10 @@ class MainActivity : AppCompatActivity() {
             .addPrinter(FileLogPrinter(dir))
             .build()
 
-        SmartLog.tag("jefryjacky").d("hello world")
-        SmartLog.d("test write log to file")
-        SmartLog.d("test write log to file2")
+        logBtn.setOnClickListener {
+            SmartLog.tag("customtag").d(message.text.toString())
+            SmartLog.d(message.text.toString())
+        }
+
     }
 }

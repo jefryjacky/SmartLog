@@ -1,7 +1,6 @@
 # SmartLog
 
 # Usage 
-----
 1. Simple setup, put code below in onCreate of your application class
 ```kotlin
   SmartLog.config = SmartLogConfig.Builder()

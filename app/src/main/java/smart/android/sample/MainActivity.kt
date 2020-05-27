@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         logBtn.setOnClickListener {
             SmartLog.tag("customtag").d(message.text.toString())
             SmartLog.d(message.text.toString())
+            message.text.clear()
         }
 
     }

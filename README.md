@@ -1,6 +1,4 @@
-[![Build Status](https://travis-ci.org/jefryjacky/SmartLog.svg?branch=master)](https://travis-ci.org/jefryjacky/smartlog)
-
-[ ![Download](https://api.bintray.com/packages/jefryjacky/AndroidLibrary/SmartLog/images/download.svg) ](https://bintray.com/jefryjacky/AndroidLibrary/SmartLog/_latestVersion)
+[![Build Status](https://travis-ci.org/jefryjacky/SmartLog.svg?branch=master)](https://travis-ci.org/jefryjacky/smartlog) [ ![Download](https://api.bintray.com/packages/jefryjacky/AndroidLibrary/SmartLog/images/download.svg) ](https://bintray.com/jefryjacky/AndroidLibrary/SmartLog/_latestVersion)
 
 # SmartLog
 

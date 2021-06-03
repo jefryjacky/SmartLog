@@ -55,7 +55,7 @@ class FileLogPrinter(private var directory: File, internal val maxFiles: Int = 1
      * last file is ussualy unfull
      */
     internal fun getUnfullFile():File{
-        if(directory.listFiles().isNotEmpty()) {
+        if(!directory.listFiles().isNullOrEmpty()) {
             directory.listFiles().forEach {
                 if(it.length() < MAX_LENGTH){
                     return it
